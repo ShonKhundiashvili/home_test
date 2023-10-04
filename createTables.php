@@ -9,6 +9,7 @@ $db->createTable(
     "id INT PRIMARY KEY, 
     name VARCHAR(255), 
     email VARCHAR(255), 
+    birth DATETIME,
     active BOOLEAN"
 );
 
@@ -28,10 +29,15 @@ function pushUsers($db)
     $userData = file_get_contents($userDataUrl);
     $users = json_decode($userData, true);
     foreach ($users as $user) {
+        $startDate = strtotime('2000-01-01');
+        $endDate = strtotime('2010-12-31');
+        $randomDate = mt_rand($startDate, $endDate);
+        $dateOfBirth = date('ymd', $randomDate);
         $db->insert("users", [
             "id" => $user["id"],
             "name" => $user["name"],
             "email" => $user["email"],
+            "birth" => $dateOfBirth,
             "active" => ($user["id"] % 2 == 0) ? 1 : 0,
         ]);
     }
