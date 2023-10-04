@@ -14,20 +14,16 @@ class Database
         $this->password = $password;
         $this->database = $database;
 
-        // Create a connection to the MySQL server without specifying a database.
         $this->connection = new mysqli($this->host, $this->username, $this->password);
 
-        // Check if the connection was successful.
         if ($this->connection->connect_error) {
             die("Connection failed: " . $this->connection->connect_error);
         } else {
             echo "Connected to the database\n";
         }
 
-        // SQL query to create the database 'data' if it doesn't exist.
         $sql = "CREATE DATABASE IF NOT EXISTS data";
 
-        // Execute the SQL query to create the database.
         if ($this->connection->query($sql) === TRUE) {
             echo "Database 'data' created successfully.\n";
         } else {
@@ -37,11 +33,20 @@ class Database
         $this->connection->close();
         $this->connection = new mysqli($this->host, $this->username, $this->password, $this->database);
 
-        // Check if the reconnection was successful.
         if ($this->connection->connect_error) {
             die("Connection to database failed: " . $this->connection->connect_error);
         } else {
             echo "Database is ready to use\n";
+        }
+    }
+
+    public function createTable($table, $fields)
+    {
+        $query = "CREATE TABLE IF NOT EXISTS $table ($fields)";
+        if ($this->connection->query($query)) {
+            echo "Table '$table' created successfully.\n";
+        } else {
+            echo "Error creating table '$table': " . $this->connection->error . "\n";
         }
     }
 
@@ -70,7 +75,7 @@ class Database
         $values = "'" . implode("', '", array_values($data)) . "'";
         $query = "INSERT INTO $table ($columns) VALUES ($values)";
         if ($this->connection->query($query)) {
-            echo "INSERT operation successful.\n";
+            echo "INSERT operation successful into table: $table \n";
         } else {
             echo "Error executing INSERT: " . $this->connection->error . "\n";
         }
@@ -106,7 +111,3 @@ class Database
         $this->connection->close();
     }
 }
-
-$db = new Database("localhost", "root", "qurman26", "data");
-
-$db->close();
