@@ -30,7 +30,6 @@ class Database
             echo "Error creating database: " . $this->connection->error . "\n";
         }
 
-        $this->connection->close();
         $this->connection = new mysqli($this->host, $this->username, $this->password, $this->database);
 
         if ($this->connection->connect_error) {
