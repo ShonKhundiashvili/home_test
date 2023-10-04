@@ -1,7 +1,7 @@
 <?php
 include('./connection.php');
 
-$db = new Database("localhost", "root", "qurman26", "data");
+$db = new Database("127.0.0.1", "root", "", "data");
 
 
 $db->createTable(
@@ -34,7 +34,6 @@ function pushUsers($db)
             "email" => $user["email"],
             "active" => ($user["id"] % 2 == 0) ? 1 : 0,
         ]);
-        //print_r($users);
     }
 }
 
