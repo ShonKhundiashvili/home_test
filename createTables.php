@@ -54,7 +54,9 @@ function pushPosts($db)
         $startDate = strtotime('2013-01-01');
         $endDate = strtotime('2022-12-31');
         $randomTimestamp = mt_rand($startDate, $endDate);
-        $dateOfCreation = date('ymd', $randomTimestamp);
+        $randomTime = mt_rand(0, 86399);
+        $dateOfCreation = date('Y-m-d H:i:s', $randomTimestamp + $randomTime);
+
 
         $db->insert("posts", [
             "id" => $post["id"],
