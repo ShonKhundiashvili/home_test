@@ -19,13 +19,17 @@ class Database
         if ($this->connection->connect_error) {
             die("Connection failed: " . $this->connection->connect_error);
         } else {
-            echo "Connected to the database\n";
+            echo "Connected to the database.\n";
         }
 
         $sql = "CREATE DATABASE IF NOT EXISTS data";
 
         if ($this->connection->query($sql) === TRUE) {
-            echo "Database 'data' created successfully.\n";
+            if ($this->connection->affected_rows > 0) {
+                echo "Database 'data' created successfully.\n";
+            } else {
+                echo "Database 'data' already exists.\n";
+            }
         } else {
             echo "Error creating database: " . $this->connection->error . "\n";
         }
@@ -37,6 +41,11 @@ class Database
         } else {
             echo "Database is ready to use\n";
         }
+    }
+
+    public function getConnection()
+    {
+        return $this->connection;
     }
 
     public function createTable($table, $fields)
