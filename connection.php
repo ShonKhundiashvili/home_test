@@ -1,12 +1,15 @@
 <?php
+//Create class database as required 
 class Database
 {
+    //Creating the variables for database 
     private $host;
     private $username;
     private $password;
     private $database;
     private $connection;
 
+    //Constructor that will be called once I call the database instance
     public function __construct($host, $username, $password, $database)
     {
         $this->host = $host;
@@ -14,6 +17,7 @@ class Database
         $this->password = $password;
         $this->database = $database;
 
+        //Connect to mysql with host username and password (connection variable will hold the connection)
         $this->connection = new mysqli($this->host, $this->username, $this->password);
 
         if ($this->connection->connect_error) {
@@ -22,8 +26,10 @@ class Database
             echo "Connected to the database.\n";
         }
 
+        //Creating database that I called data
         $sql = "CREATE DATABASE IF NOT EXISTS data";
 
+        //Checking if the query execution is true and if data database already exists if not creating else not creating
         if ($this->connection->query($sql) === TRUE) {
             if ($this->connection->affected_rows > 0) {
                 echo "Database 'data' created successfully.\n";
@@ -34,12 +40,13 @@ class Database
             echo "Error creating database: " . $this->connection->error . "\n";
         }
 
+        //Connect again and now to the created database 'data'
         $this->connection = new mysqli($this->host, $this->username, $this->password, $this->database);
 
         if ($this->connection->connect_error) {
             die("Connection to database failed: " . $this->connection->connect_error);
         } else {
-            echo "Database is ready to use\n";
+            echo "Database data is ready to use\n";
         }
     }
 
