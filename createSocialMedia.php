@@ -1,4 +1,9 @@
 <?php
+include('./connection.php');
+
+$db = new Database("127.0.0.1", "root", "", "data");
+$mysqli = $db->getConnection();
+
 $imageUrl = 'https://cdn2.vectorstock.com/i/1000x1000/23/81/default-avatar-profile-icon-vector-18942381.jpg';
 $directoryPath = '/Applications/XAMPP/xamppfiles/htdocs/inManage';
 $savePath = $directoryPath . '/savedImg.jpg';
@@ -18,8 +23,6 @@ if (!file_exists($savePath)) {
         echo "Failed to fetch the image content";
     }
 }
-
-$mysqli = new mysqli("127.0.0.1", "root", "", "data");
 
 if ($mysqli->connect_error) {
     die("Database connection failed: " . $mysqli->connect_error);
