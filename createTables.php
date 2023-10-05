@@ -1,9 +1,10 @@
 <?php
 include('./connection.php');
 
+//Creating instance of the database
 $db = new Database("127.0.0.1", "root", "", "data");
 
-
+//Creating table users
 $db->createTable(
     "users",
     "id INT PRIMARY KEY, 
@@ -13,6 +14,7 @@ $db->createTable(
     active BOOLEAN"
 );
 
+//Creating table posts
 $db->createTable(
     "posts",
     "id INT AUTO_INCREMENT PRIMARY KEY,
@@ -23,6 +25,7 @@ $db->createTable(
     active BOOLEAN"
 );
 
+//This function takes the url that was provided that uses get contents func in order to push data into users table
 function pushUsers($db)
 {
     $userDataUrl = 'https://jsonplaceholder.typicode.com/users';
@@ -43,6 +46,7 @@ function pushUsers($db)
     }
 }
 
+//This function takes the url that was provided that uses get contents func in order to push data into posts table
 function pushPosts($db)
 {
     $postDataUrl = 'https://jsonplaceholder.typicode.com/posts';
@@ -69,6 +73,7 @@ function pushPosts($db)
     }
 }
 
+//Calling the functions
 pushUsers($db);
 pushPosts($db);
 
