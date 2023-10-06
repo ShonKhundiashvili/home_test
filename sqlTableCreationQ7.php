@@ -55,3 +55,26 @@ if ($insert) {
 } else {
     echo "Error: " . $mysqli->error;
 }
+
+$selectAll = "SELECT * FROM question_7";
+
+$res = $mysqli->query($selectAll);
+
+if (!$res) {
+    die("Query failed: " . $mysqli->error);
+}
+
+echo "<table border='1'>
+        <tr>
+            <th>Date</th>
+            <th>Hour</th>
+            <th>Hourly Post Counts</th>
+        </tr>";
+
+while ($row = $res->fetch_assoc()) {
+    echo "<tr>";
+    echo "<td>" . $row['date'] . "</td>";
+    echo "<td>" . $row['time'] . "</td>";
+    echo "<td>" . $row['hourly_post_counts'] . "</td>";
+    echo "</tr>";
+}
